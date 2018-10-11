@@ -24,8 +24,25 @@
                           Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <Grid>
-
-        </Grid>
+        <ListView Width="200" DockPanel.Dock="Left" ItemsSource="{Binding Notebooks}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView Width="200" DockPanel.Dock="Left" ItemsSource="{Binding Notes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Content="Speech" Click="Button_Click"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid/>
     </DockPanel>
 </Window>
