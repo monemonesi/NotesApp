@@ -24,7 +24,14 @@
                           Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <ListView Width="200" DockPanel.Dock="Left" ItemsSource="{Binding Notebooks}">
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock x:Name="statusBarTextBlock"/>
+            </StatusBarItem>
+        </StatusBar>
+        <ListView Width="200" DockPanel.Dock="Left"
+                  SelectedItem="{Binding SelectedNotebook, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding Notebooks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -40,9 +47,22 @@
         </ListView>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Content="Speech" Click="Button_Click"/>
+                <ToggleButton Content="Speech" Click="SpeechButton_Click"/>
+                <ToggleButton x:Name="BoldButton" Click="BoldButton_Click" Width="15">
+                    <TextBlock Text="B" FontWeight="Bold" />
+                </ToggleButton>
+                <ToggleButton x:Name="ItalicButton" Click="ItalicButton_Click" Width="15">
+                    <TextBlock Text="i"  FontStyle="Italic"/>
+                </ToggleButton>
+                <ToggleButton x:Name="UnderlineButton" Click="UnderlineButton_Click" Width="15">
+                    <TextBlock Text="u" TextDecorations="Underline"/>
+                </ToggleButton>
             </ToolBar>
         </ToolBarTray>
-        <Grid/>
+        <Grid>
+            <RichTextBox x:Name="contentRichTextBox" 
+                         SelectionChanged="contentRichTextBox_SelectionChanged"
+                         TextChanged="contentRichTextBox_TextChanged"/>
+        </Grid>
     </DockPanel>
 </Window>
