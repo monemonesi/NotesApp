@@ -47,7 +47,7 @@
         </ListView>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <ToggleButton Content="Speech" Click="SpeechButton_Click"/>
+                <!--<ToggleButton Content="Speech" Click="SpeechButton_Click"/>-->
                 <ToggleButton x:Name="BoldButton" Click="BoldButton_Click" Width="15">
                     <TextBlock Text="B" FontWeight="Bold" />
                 </ToggleButton>
@@ -57,6 +57,12 @@
                 <ToggleButton x:Name="UnderlineButton" Click="UnderlineButton_Click" Width="15">
                     <TextBlock Text="u" TextDecorations="Underline"/>
                 </ToggleButton>
+                <Separator/>
+                <ComboBox x:Name="fontFamilyComboBox" Width="150"
+                          SelectionChanged="fontFamilyComboBox_SelectionChanged"/>
+                <ComboBox x:Name="fontSizeComboBox" Width="50"
+                          IsEditable="True"
+                          TextBoxBase.TextChanged="fontSizeComboBox_TextChanged"/>
             </ToolBar>
         </ToolBarTray>
         <Grid>

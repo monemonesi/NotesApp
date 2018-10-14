@@ -40,6 +40,12 @@ namespace NotesApp.View
             recognizer.LoadGrammar(grammar);
             recognizer.SetInputToDefaultAudioDevice();
             recognizer.SpeechRecognized += Recognizer_SpeechRecognized;
+
+            var fontFamilies = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
+            fontFamilyComboBox.ItemsSource = fontFamilies;
+
+            List<double> fontSizes = new List<double> { 7, 8, 9, 10, 11, 12, 14, 16, 20, 28, 36, 48, 72 };
+            fontSizeComboBox.ItemsSource = fontSizes;
         }
 
         private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -56,18 +62,18 @@ namespace NotesApp.View
         }
 
         
-        private void SpeechButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool isButtonEnabled = (sender as ToggleButton).IsChecked ?? false;
-            if (!isButtonEnabled)
-            {
-                recognizer.RecognizeAsync(RecognizeMode.Multiple);
-            }
-            else
-            {
-                recognizer.RecognizeAsyncStop();
-            }
-        }
+        //private void SpeechButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    bool isButtonEnabled = (sender as ToggleButton).IsChecked ?? false;
+        //    if (!isButtonEnabled)
+        //    {
+        //        recognizer.RecognizeAsync(RecognizeMode.Multiple);
+        //    }
+        //    else
+        //    {
+        //        recognizer.RecognizeAsyncStop();
+        //    }
+        //}
 
         private void contentRichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -97,18 +103,25 @@ namespace NotesApp.View
         {
             var selectedFontWeightState = 
                 contentRichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
-            var selectedFontStyleState =
-                contentRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
-            var selectedFontDecorationState =
-                contentRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-            
-
             BoldButton.IsChecked = (selectedFontWeightState != DependencyProperty.UnsetValue) &&
                 (selectedFontWeightState.Equals(FontWeights.Bold));
+
+            var selectedFontStyleState =
+                contentRichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
             ItalicButton.IsChecked = (selectedFontStyleState != DependencyProperty.UnsetValue) &&
                 (selectedFontStyleState.Equals(FontStyles.Italic));
+
+            var selectedFontDecorationState =
+                contentRichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
             UnderlineButton.IsChecked = (selectedFontDecorationState != DependencyProperty.UnsetValue) &&
                 (selectedFontDecorationState.Equals(TextDecorations.Underline));
+
+            fontFamilyComboBox.SelectedItem =
+                contentRichTextBox.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+
+            fontSizeComboBox.Text =
+                (contentRichTextBox.Selection.GetPropertyValue(Inline.FontSizeProperty)).ToString();
+
         }
 
         private void ItalicButton_Click(object sender, RoutedEventArgs e)
@@ -142,5 +155,17 @@ namespace NotesApp.View
             }
         }
 
+        private void fontFamilyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(fontFamilyComboBox.SelectedItem != null)
+            {
+                contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, fontFamilyComboBox.SelectedItem);
+            }
+        }
+
+        private void fontSizeComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            contentRichTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, fontSizeComboBox.Text);
+        }
     }
 }
