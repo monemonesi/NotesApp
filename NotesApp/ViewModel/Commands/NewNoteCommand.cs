@@ -25,10 +25,7 @@ namespace NotesApp.ViewModel.Commands
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public void Execute(object parameter)

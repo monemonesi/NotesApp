@@ -21,7 +21,7 @@ namespace NotesApp.ViewModel
             set
             {
                 selectedNotebook = value;
-                //TODO: get notes
+                ReadNotes();
             }
         }
 
@@ -39,6 +39,7 @@ namespace NotesApp.ViewModel
             Notes = new ObservableCollection<Note>();
 
             ReadNotebooks();
+            ReadNotes();
         }
 
         public void CreateNewNotebook()
@@ -48,6 +49,8 @@ namespace NotesApp.ViewModel
                 Name = "New Notebook"
             };
             DatabaseHelper.Insert(newNotebook);
+
+            ReadNotebooks();
         }
 
         public void CreateNewNote(int notebookId)
@@ -61,6 +64,7 @@ namespace NotesApp.ViewModel
             };
 
             DatabaseHelper.Insert(newNote);
+            ReadNotes();
         }
 
         public void ReadNotebooks()
@@ -74,6 +78,7 @@ namespace NotesApp.ViewModel
                 {
                     Notebooks.Add(notebook);
                 }
+                SelectedNotebook = Notebooks.FirstOrDefault();
             }
 
         }
@@ -86,7 +91,8 @@ namespace NotesApp.ViewModel
                 {
                     //TODO: handle this exception (When a table of notebook does not exists)
                     var notes = connection.Table<Note>().Where(n => n.NotebookId == SelectedNotebook.Id).ToList();
-                    notes.Clear();
+
+                    Notes.Clear();
                     foreach (Note note in notes)
                     {
                         Notes.Add(note);

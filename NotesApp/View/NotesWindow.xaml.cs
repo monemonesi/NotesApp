@@ -22,24 +22,24 @@ namespace NotesApp.View
     /// </summary>
     public partial class NotesWindow : Window
     {
-        SpeechRecognitionEngine recognizer;
+        //SpeechRecognitionEngine recognizer;
         public NotesWindow()
         {
             InitializeComponent();
 
-            var currentCulture = (from r in SpeechRecognitionEngine.InstalledRecognizers()
-                                  where r.Culture.Equals(Thread.CurrentThread.CurrentUICulture)
-                                  select r).FirstOrDefault();
+            //var currentCulture = (from r in SpeechRecognitionEngine.InstalledRecognizers()
+            //                      where r.Culture.Equals(Thread.CurrentThread.CurrentUICulture)
+            //                      select r).FirstOrDefault();
 
-            recognizer = new SpeechRecognitionEngine(currentCulture);
+            //recognizer = new SpeechRecognitionEngine(currentCulture);
 
-            GrammarBuilder builder = new GrammarBuilder();
-            builder.AppendDictation();
-            Grammar grammar = new Grammar(builder);
+            //GrammarBuilder builder = new GrammarBuilder();
+            //builder.AppendDictation();
+            //Grammar grammar = new Grammar(builder);
 
-            recognizer.LoadGrammar(grammar);
-            recognizer.SetInputToDefaultAudioDevice();
-            recognizer.SpeechRecognized += Recognizer_SpeechRecognized;
+            //recognizer.LoadGrammar(grammar);
+            //recognizer.SetInputToDefaultAudioDevice();
+            //recognizer.SpeechRecognized += Recognizer_SpeechRecognized;
 
             var fontFamilies = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
             fontFamilyComboBox.ItemsSource = fontFamilies;
@@ -48,13 +48,13 @@ namespace NotesApp.View
             fontSizeComboBox.ItemsSource = fontSizes;
         }
 
-        private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
-        {
-            string recognizedTest = e.Result.Text;
-            var newBlockItem = new Paragraph(new Run(recognizedTest));
+        //private void Recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        //{
+        //    string recognizedTest = e.Result.Text;
+        //    var newBlockItem = new Paragraph(new Run(recognizedTest));
 
-            contentRichTextBox.Document.Blocks.Add(newBlockItem);
-        }
+        //    contentRichTextBox.Document.Blocks.Add(newBlockItem);
+        //}
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {

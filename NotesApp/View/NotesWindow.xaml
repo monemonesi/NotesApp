@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesApp.View"
         xmlns:vm="clr-namespace:NotesApp.ViewModel"
+        xmlns:uc="clr-namespace:NotesApp.View.UserControls"
         mc:Ignorable="d"
         Title="NotesWindow" Height="450" Width="800">
     <Window.Resources>
@@ -30,18 +31,19 @@
             </StatusBarItem>
         </StatusBar>
         <ListView Width="200" DockPanel.Dock="Left"
+                  Background="DarkGray"
                   SelectedItem="{Binding SelectedNotebook, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Notebooks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <uc:NotebookControl DisplayNotebook="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <ListView Width="200" DockPanel.Dock="Left" ItemsSource="{Binding Notes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}"/>
+                    <uc:NoteControl Note="{Binding}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
