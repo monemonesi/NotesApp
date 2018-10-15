@@ -23,5 +23,17 @@ namespace NotesApp.View
         {
             InitializeComponent();
         }
+
+        private void HaveAnAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            registerStackPanel.Visibility = Visibility.Collapsed;
+            loginStackPanel.Visibility = Visibility.Visible;
+        }
+
+        private void NoAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            loginStackPanel.Visibility = Visibility.Collapsed;
+            registerStackPanel.Visibility = Visibility.Visible;
+        }
     }
 }

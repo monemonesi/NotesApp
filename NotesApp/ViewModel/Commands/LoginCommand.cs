@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotesApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +20,17 @@ namespace NotesApp.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
+            var user = parameter as User;
+            bool usernameNotInserted = string.IsNullOrEmpty(user.UserName);
+            bool passwordNotInserted = string.IsNullOrEmpty(user.Password);
+            if (usernameNotInserted) return false;
+            if (passwordNotInserted) return false;
             return true;
         }
 
         public void Execute(object parameter)
         {
-            //TODO: implement functionality
+            VM.Login();
         }
     }
 }

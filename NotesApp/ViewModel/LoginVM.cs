@@ -1,5 +1,6 @@
 ﻿using NotesApp.Model;
 using NotesApp.ViewModel.Commands;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,34 @@ namespace NotesApp.ViewModel
         {
             RegisterCommand = new RegisterCommand(this);
             LoginCommand = new LoginCommand(this);
+        }
+
+        public void Login()
+        {
+            using(SQLiteConnection connection = new SQLiteConnection(DatabaseHelper.dbFile))
+            {
+                connection.CreateTable<User>();
+
+                var user = connection.Table<User>().Where(u => u.UserName == User.UserName).FirstOrDefault();
+                if(user.Password == User.Password)
+                {
+                    //TODO: establish a succesfull login
+                }
+            }
+        }
+
+        public void Register()
+        {
+            using(SQLiteConnection connection = new SQLiteConnection(DatabaseHelper.dbFile))
+            {
+                connection.CreateTable<User>();
+                bool succesfullInsertion = DatabaseHelper.Insert(User);
+                if (succesfullInsertion)
+                {
+                    //TODO:
+                }
+
+            }
         }
     }
 }
