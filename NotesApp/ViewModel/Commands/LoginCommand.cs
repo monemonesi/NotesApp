@@ -21,11 +21,16 @@ namespace NotesApp.ViewModel.Commands
         public bool CanExecute(object parameter)
         {
             var user = parameter as User;
-            bool usernameNotInserted = string.IsNullOrEmpty(user.UserName);
-            bool passwordNotInserted = string.IsNullOrEmpty(user.Password);
-            if (usernameNotInserted) return false;
-            if (passwordNotInserted) return false;
+            //if (user == null) return false;
+
+            //bool usernameNotInserted = string.IsNullOrEmpty(user.Username);
+            //if (usernameNotInserted) return false;
+
+            //bool passwordNotInserted = string.IsNullOrEmpty(user.Password);
+            //if (passwordNotInserted) return false;
+
             return true;
+
         }
 
         public void Execute(object parameter)

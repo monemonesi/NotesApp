@@ -1,6 +1,5 @@
 ﻿using NotesApp.Model;
 using NotesApp.ViewModel.Commands;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,35 +21,41 @@ namespace NotesApp.ViewModel
         public RegisterCommand RegisterCommand { get; set; }
         public LoginCommand LoginCommand { get; set; }
 
+        public event EventHandler HasLoggedIn;
+
         public LoginVM()
         {
+            User = new User();
             RegisterCommand = new RegisterCommand(this);
             LoginCommand = new LoginCommand(this);
         }
 
         public void Login()
         {
-            using(SQLiteConnection connection = new SQLiteConnection(DatabaseHelper.dbFile))
+            using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(DatabaseHelper.dbFile))
             {
                 connection.CreateTable<User>();
 
-                var user = connection.Table<User>().Where(u => u.UserName == User.UserName).FirstOrDefault();
-                if(user.Password == User.Password)
+                //Handle exception here
+                var user = connection.Table<User>().Where(u => u.Username == User.Username).FirstOrDefault();
+                if (user.Password == User.Password)
                 {
-                    //TODO: establish a succesfull login
+                    App.UserId = user.Id.ToString();
+                    HasLoggedIn(this, new EventArgs());
                 }
             }
         }
 
         public void Register()
         {
-            using(SQLiteConnection connection = new SQLiteConnection(DatabaseHelper.dbFile))
+            using (SQLite.SQLiteConnection connection = new SQLite.SQLiteConnection(DatabaseHelper.dbFile))
             {
                 connection.CreateTable<User>();
                 bool succesfullInsertion = DatabaseHelper.Insert(User);
                 if (succesfullInsertion)
                 {
-                    //TODO:
+                    App.UserId = User.Id.ToString();
+                    HasLoggedIn(this, new EventArgs());
                 }
 
             }

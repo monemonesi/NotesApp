@@ -22,21 +22,22 @@ namespace NotesApp.ViewModel.Commands
         {
             var user = parameter as User;
 
-            bool usernameNotInserted = string.IsNullOrEmpty(user.UserName);
-            if (usernameNotInserted) return false;
+            //if (user == null) return false;
 
-            bool passwordNotInserted = string.IsNullOrEmpty(user.Password);
-            if (passwordNotInserted) return false;
+            //bool usernameNotInserted = string.IsNullOrEmpty(user.Username);
+            //if (usernameNotInserted) return false;
 
-            bool emailNotInserted = string.IsNullOrEmpty(user.Email);
-            if (emailNotInserted) return false;
+            //bool passwordNotInserted = string.IsNullOrEmpty(user.Password);
+            //if (passwordNotInserted) return false;
 
-            bool nameNotInserted = string.IsNullOrEmpty(user.Name);
-            if (nameNotInserted) return false;
+            //bool emailNotInserted = string.IsNullOrEmpty(user.Email);
+            //if (emailNotInserted) return false;
 
-            bool lastNameNotInserted = string.IsNullOrEmpty(user.LastName);
-            if (lastNameNotInserted) return false;
+            //bool nameNotInserted = string.IsNullOrEmpty(user.Name);
+            //if (nameNotInserted) return false;
 
+            //bool lastNameNotInserted = string.IsNullOrEmpty(user.LastName);
+            //if (lastNameNotInserted) return false;
             return true;
         }
 

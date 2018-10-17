@@ -45,15 +45,15 @@ namespace NotesApp.Model
             }
         }
 
-        private string userName;
+        private string username;
 
-        public string UserName
+        public string Username
         {
-            get { return userName; }
+            get { return username; }
             set
             {
-                userName = value;
-                OnPropertyChanged("UserName");
+                username = value;
+                OnPropertyChanged("Username");
             }
         }
 
