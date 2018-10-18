@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotesApp.View"
+        xmlns:b="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:NotesApp.ViewModel"
         xmlns:uc="clr-namespace:NotesApp.View.UserControls"
+        xmlns:cv="clr-namespace:NotesApp.ViewModel.Converters"
         mc:Ignorable="d"
         Title="NotesWindow" Height="450" Width="800">
     <Window.Resources>
         <vm:NotesVM x:Key="vm"/>
+        <cv:BoolToVisConverter x:Key="boolToVis"/>
     </Window.Resources>
-    
+
     <DockPanel DataContext="{StaticResource vm}">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -36,7 +39,26 @@
                   ItemsSource="{Binding Notebooks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <uc:NotebookControl DisplayNotebook="{Binding}"/>
+                    <Grid>
+                        <uc:NotebookControl DisplayNotebook="{Binding}"/>
+                        <TextBox Text="{Binding Name, Mode=TwoWay}"
+                                 Visibility="{Binding Source={StaticResource vm}, Path=IsEditing,
+                            Converter={StaticResource boolToVis}}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="LostFocus">
+                                    <b:InvokeCommandAction 
+                                        Command="{Binding Source={StaticResource vm}, Path=HasEditedCommand}"
+                                        CommandParameter="{Binding}"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </TextBox>
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Rename"
+                                          Command="{Binding Source={StaticResource vm}, Path=BeginEditCommand}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
