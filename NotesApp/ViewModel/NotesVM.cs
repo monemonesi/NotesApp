@@ -12,7 +12,6 @@ namespace NotesApp.ViewModel
 {
     public class NotesVM:INotifyPropertyChanged
     {
-        //public bool IsEditing { get; set; }
         private bool isEditing;
 
         public bool IsEditing
@@ -30,8 +29,6 @@ namespace NotesApp.ViewModel
 
         private Notebook selectedNotebook;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public Notebook SelectedNotebook
         {
             get { return selectedNotebook; }
@@ -42,6 +39,19 @@ namespace NotesApp.ViewModel
             }
         }
 
+        private Note selectedNote;
+
+        public Note SelectedNote
+        {
+            get { return selectedNote; }
+            set
+            {
+                selectedNote = value;
+                SelectedNoteChanged(this, new EventArgs());
+            }
+        }
+
+
         public ObservableCollection<Note> Notes { get; set; }
 
         public NewNotebookCommand NewNotebookCommand { get; set; }
@@ -49,6 +59,9 @@ namespace NotesApp.ViewModel
 
         public BeginEditCommand BeginEditCommand { get; set; }
         public HasEditedCommand HasEditedCommand { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler SelectedNoteChanged;
 
         public NotesVM()
         {
@@ -148,6 +161,11 @@ namespace NotesApp.ViewModel
                 IsEditing = false;
                 ReadNotebooks();
             }
+        }
+
+        public void UpdateSelectedNote()
+        {
+            DatabaseHelper.Update(SelectedNote);
         }
     }
 }
