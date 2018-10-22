@@ -59,6 +59,7 @@ namespace NotesApp.ViewModel
 
         public BeginEditCommand BeginEditCommand { get; set; }
         public HasEditedCommand HasEditedCommand { get; set; }
+        public RemoveNotebookCommand RemoveNotebookCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler SelectedNoteChanged;
@@ -71,6 +72,8 @@ namespace NotesApp.ViewModel
             NewNoteCommand = new NewNoteCommand(this);
             BeginEditCommand = new BeginEditCommand(this);
             HasEditedCommand = new HasEditedCommand(this);
+            RemoveNotebookCommand = new RemoveNotebookCommand(this);
+
 
             Notebooks = new ObservableCollection<Notebook>();
             Notes = new ObservableCollection<Note>();
@@ -166,6 +169,16 @@ namespace NotesApp.ViewModel
         public void UpdateSelectedNote()
         {
             DatabaseHelper.Update(SelectedNote);
+            //ReadNotebooks();
+        }
+
+        public void RemoveNoteBook(Notebook notebook)
+        {
+            if(notebook != null)
+            {
+                DatabaseHelper.Delete(notebook);
+                ReadNotebooks();
+            }
         }
     }
 }
